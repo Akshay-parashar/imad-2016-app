@@ -6,6 +6,6 @@
 }
 
 .jumbotron {
-	background: url('/ui/img/jumbo-bg.jpg');
+	background: url('../img/jumbo-bg.jpg');
 	background-size: cover;
 }
