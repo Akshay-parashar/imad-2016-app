@@ -29,52 +29,52 @@ app.get('/web', function(req,res) {
 	 res.sendFile(path.join(__dirname, 'ui', 'web.html'));
 });
 
-app.get('/ui/style.css', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'style.css'));
+//Responses for Stylesheets 
+
+app.get('/ui/css/style.css', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/css', 'style.css'));
 });
 
-app.get('/ui/css/custom.css', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/css', 'custom.css'));
+app.get('/ui/css/normalize.css', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/css', 'normalize.css'));
 });
+
+//--------------------------------------
 
 // Responses for images
-app.get('/ui/img/prto.jpg', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'prto.jpg'));
+app.get('/img/ico.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'img', 'ico.png'));
 });
 
-app.get('/ui/madi.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
+app.get('/ui/img/madi.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'madi.png'));
 });
 
-app.get('/ui/img/jay.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'jay.png'));
+app.get('/ui/img/back.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'back.jpg'));
 });
 
-app.get('/ui/img/angie.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'angie.png'));
+app.get('/ui/img/fb.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'fb.png'));
 });
 
-app.get('/ui/img/nodestradamus.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'nodestradamus.png'));
+app.get('/ui/img/tw.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'tw.png'));
 });
 
-app.get('/ui/img/geo.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'geo.png'));
+app.get('/ui/img/insta.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'insta.png'));
 });
 
-app.get('/ui/img/ecma.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'ecma.png'));
+//-----------------------------
+
+//Responses for script files
+
+app.get('/ui/scripts/main.js', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/scripts', 'main.js'));
 });
 
-app.get('/ui/img/json.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'json.png'));
-});
-
-app.get('/ui/img/jumbo-bg.jpg', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui/img', 'jumbo-bg.jpg'));
-});
-
-// End of image responses
+//-----------------------------
 
 
 
