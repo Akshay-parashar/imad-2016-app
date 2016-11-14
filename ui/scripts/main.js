@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	alert("pageload event fired!");
+	//alert("pageload event fired!");
 	// For Fetching artilces from database dynamically 
 	var preq = new XMLHttpRequest();
 
@@ -47,7 +47,46 @@ $(document).ready(function () {
 				req.open('GET','http://localhost:8080/counter',true);
 				req.send(null);
 			
-	});
+		});
+
+		
+		//For Login page 
+		var but = $('#submit_btn');
+		but.click(function(){
+				var username = document.getElementById('Username').value;
+				var password = document.getElementById('Password').value;;
+				console.log('submit_btn working!');
+				console.log(username);
+				console.log(password);
+				
+				var req = new XMLHttpRequest();
+
+				//Catch the response and store it in a variable
+				req.onreadystatechange = function(){
+					if(req.readyState === XMLHttpRequest.DONE){
+						//Take action
+							if (req.status === 200) {
+							//
+							console.log('user logged in!');
+							alert('Success!');
+						}
+						else if(req.status == 403){
+							alert('Username/password is incorrect');
+						}
+						else if(req.status == 500){
+							alert('something went wrong on serever');	
+						}
+					}
+						//Not done
+				};
+
+				//Making a Request
+				
+				
+				req.open('POST','http://localhost:8080/login',true);
+				req.setRequestHeader('Content-Type', 'application/json');
+				req.send(JSON.stringify({username: username, password: password}));
+		});
 	
 });
 

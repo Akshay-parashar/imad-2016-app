@@ -4,6 +4,8 @@ var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool;
 var crypto = require('crypto');
+var bodyparser = require('body-parser');
+var session = require('express-session');
 
 var congif = {
   user: 'postgres',
@@ -15,6 +17,12 @@ var congif = {
 
 var app = express();
 app.use(morgan('combined'));
+app.use(bodyparser.json());
+app.use(session({
+  secret: 'someRandomValue',
+  cookie: { maxAge: 1000* 60 * 60 * 24 * 30 }
+}));
+
 /*var phpExpress = require('php-express')({
  
   // assumes php is in your PATH
@@ -35,8 +43,6 @@ var connection = mysql.createConnection({
   password : process.env.DB_PASS,
   database : 'test'
 });*/
-
-
 
 //-------------------------
 
@@ -135,16 +141,77 @@ app.get('/articles/:articleName', function(req,res){
 
 function hash(input,salt){
   var hashed = crypto.pbkdf2Sync(input,salt,1000,512,'sha512');
-  return hashed.toString('hex');
+  return ['pbkdf2',1000,salt,hashed.toString('hex')].join('$');
 }
 
-var salt = 'some random string';
+var salted = 'some random string';
 
+//Enpoint for just testing hash
 app.get('/hash/:input',function(req,res){
-  var hashedString = hash(req.params.input,salt);
+  var hashedString = hash(req.params.input,salted);
   res.send(hashedString);
 });
 
+app.post('/create_user',function(req,res){
+  var username = req.body.username;
+  var password = req.body.password;
+  var salt = crypto.randomBytes(128).toString('hex');
+  var dbstring = hash(password,salt);
+  pool.query('INSERT INTO users (username,password) VALUES ($1,$2)',[username,dbstring],function(err,result){
+       if (err) {
+          res.status(500).send(err.toString());
+      }
+      else {
+        res.send('User created successfully! :' + username);
+      }
+  });
+});
+
+app.post('/login',function(req,res){
+  var username = req.body.username;
+  var password = req.body.password;
+  pool.query('Select * from users where username = $1',[username],function(err,result){
+       if (err) {
+          res.status(500).send(err.toString());
+      }
+      else {
+          if(result.rows.length == 0){
+            res.status(403).send('username is invalid');     
+          }
+          else{
+            //Username matched now match the password
+            var dbstring = result.rows[0].password;
+            var salt = dbstring.split('$')[2];
+            var hashpass = hash(password,salt); //Hash based on the currently submitted password
+            if(hashpass == dbstring){
+              //Setting up Session 
+              req.session.auth = {userId: result.rows[0].id };
+              res.send("Credentials Correct,Logged in as: " + username);
+            }
+            else{
+              res.status(403).send('username/password are invalid');     
+            }
+          }
+      }
+  });
+});
+
+app.get('/check-login',function(req,res){
+    console.log(req.session);
+    console.log(req.session.auth);
+    console.log(req.session.auth.userId);
+    if(req.session && req.session.auth & req.session.auth.userId){
+      res.send("You are logged in: " + req.session.auth.userId.toString());
+    }
+    else{
+      res.send('You are not logged in!!');
+    }
+});
+
+app.get('/logout',function(req,res){
+  delete req.session.auth;
+  res.send('Logged Out!!');
+});
 //------------------------------------
 
 //Responses for Stylesheets 
