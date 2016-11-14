@@ -3,6 +3,7 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool;
+var crypto = require('crypto');
 
 var congif = {
   user: 'postgres',
@@ -46,41 +47,49 @@ app.use(express.static('css'));
 //---------------------------
 
 //General Files
+function createTemplate(data){
+    var heading = data.heading;
+    var date = data.date;
+    var content = data.content;
+    var blogtemp =  `<div class="post"> 
+                        <h3 class="post_heading">${heading}</h3>
+                        <span class="post_date" id="bg_date">${date.toDateString()}</span><span class="post_comments"># Comments</span>
+                        <p class="post_conent">${content}</p>
+                        <a href="#">Comment</a>
+                        <hr>
+                  </div>` ;
+      return blogtemp;
+}
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function(req,res) {
-	 res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
-});
-
-
-app.get('/article-two', function(req,res) {
-	res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));
-});
-
-app.get('/article-three', function(req,res) {
-	res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));
-});
-
-app.get('/web', function(req,res) {
-	 res.sendFile(path.join(__dirname, 'ui', 'web.html'));
+var counter = 0;
+app.get('/counter',function(req,res){
+  counter = counter + 1;
+  res.send(counter.toString());
 });
 
 
  //make a connection pool
  var pool = new Pool(congif);
-
-app.get('/test-db', function(req,res){
+ var allpost = '';
+ var i;
+app.get('/fetch_blog_posts', function(req,res){
    
     //make a select query 
-    pool.query('SELECT * FROM test', function(err,result){
+    pool.query('SELECT * FROM article', function(err,result){
       if (err) {
           res.status(500).send(err.toString());
       }
       else{
-        res.send(JSON.stringify(result.rows));
+        //res.send(JSON.stringify(result));
+        //We will be recieving multiple articles from the database
+        for(i=0; i < result.rowCount; i++){
+          allpost = allpost + createTemplate(result.rows[i]);
+        }
+        res.send(allpost);
       }
     });
 
@@ -89,7 +98,7 @@ app.get('/test-db', function(req,res){
 
 
 app.get('/article_one',function(req,res){
-    pool.query("Select * from article where title = 'Article-Two' ",function(err,result){
+    pool.query("Select * from article where title = 'Article-One' ",function(err,result){
         if(err){
           res.status(500).send(err.toString());
           console.log("Error situation in db most probab in query")
@@ -103,6 +112,37 @@ app.get('/article_one',function(req,res){
           }
       }
     });
+});
+
+app.get('/articles/:articleName', function(req,res){ 
+
+  pool.query("Select * from article where title = $1" , [req.params.articleName] ,function(err,result){
+     if(err){
+          res.status(500).send(err.toString());
+         // console.log("Error situation in db most probab in query")
+        }
+      else {
+        if(result.rows.length == 0){
+            res.send(404).send("Article Not Found");
+          }
+          else{
+            articleData = result.rows[0];
+            res.send(createTemplate(articleData));
+          }
+      }
+  });
+});
+
+function hash(input,salt){
+  var hashed = crypto.pbkdf2Sync(input,salt,1000,512,'sha512');
+  return hashed.toString('hex');
+}
+
+var salt = 'some random string';
+
+app.get('/hash/:input',function(req,res){
+  var hashedString = hash(req.params.input,salt);
+  res.send(hashedString);
 });
 
 //------------------------------------

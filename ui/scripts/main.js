@@ -1,23 +1,54 @@
-//var blog_container = document.getElementById('blog_pos_con');
-
 $(document).ready(function () {
-	$("#bg_date").click(function(){
-		$(this).hide();
-		console.log("WOOOOOHOOOOO!!!!!")
+	alert("pageload event fired!");
+	// For Fetching artilces from database dynamically 
+	var preq = new XMLHttpRequest();
+
+	//catch the response and store it 
+	preq.onreadystatechange = function(){
+					if(preq.readyState === XMLHttpRequest.DONE){
+						//Take action
+							if (preq.status === 200) {
+								console.log("getting response from db endpoint")
+							var blog_con = preq.responseText;
+							$("#blog_pos_con").append(blog_con);
+						}
+					}
+						//Not done
+				};
+
+			//Making a Request
+			preq.open('GET','http://localhost:8080/fetch_blog_posts',true);
+			preq.send(null);
+
+	
+	var counter = 0;
+	var span = $("#count")
+
+	//For counter logic
+	var button = $("#counter");
+		button.click(function(){
+			//Create a request
+				var req = new XMLHttpRequest();
+
+
+			//Catch the response and store it in a variable
+				req.onreadystatechange = function(){
+					if(req.readyState === XMLHttpRequest.DONE){
+						//Take action
+							if (req.status === 200) {
+							var counter = req.responseText;
+							span.html(counter.toString());
+						}
+					}
+						//Not done
+				};
+
+				//Making a Request
+				req.open('GET','http://localhost:8080/counter',true);
+				req.send(null);
+			
 	});
-
-	var con = `<div class="post" > 
-                        <h3 class="post_heading">Article one</h3>
-                        <span class="post_date" id="bg_date">10-10-2016</span><span class="post_comments"># Comments</span>
-                        <p class="post_conent">This is my first blog post article. And yes i know it took me a long time to develop this layout bt yeah it was worth it.
-                        And the said part is,this is only the ui part without any jquery or stuff i still have to add the backend logic and connecting this to my database and changing the server js and main js files. </p>
-                        <a href="#">Comment</a>
-                        <hr>
-                    </div>`
-
-	$("#bg_date").click(function(){
-		console.log("Executed")
-		$("#blog_pos_con").append(con);
-	});
-
+	
 });
+
+
