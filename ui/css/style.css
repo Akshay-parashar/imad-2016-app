@@ -136,7 +136,7 @@ figcaption{
 .blog_posts {
 	width: 70%;
 	background-color: white;
-	height: 100vh;
+	height: 80%;
 	float: left;
 	margin: 10px;
 	margin-top: 10px;
@@ -149,7 +149,7 @@ figcaption{
 .side_banner {
 	width: 27%;
 	background-color: white;
-	height: 100vh;
+	height: 100%;
 	float: right;
 	margin-right: 10px;
 	margin-top: 10px;
@@ -166,8 +166,18 @@ figcaption{
 	margin-top: 10px;
 }
 
-.blog_col {
+.center_con {
 	text-align: center;
+}
+
+.post{
+	padding: 5px 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.post_comments {
+	margin-left: 20px;
 }
 
 /* ---- Page Elements ---- */
@@ -199,6 +209,7 @@ figcaption{
 .headline {
 	margin-bottom: 0;
 	margin-top: 0;
+	font-size: 2em;
 }
 
 .icon-location {
