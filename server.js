@@ -90,16 +90,29 @@ app.get('/fetch_blog_posts', function(req,res){
           res.status(500).send(err.toString());
       }
       else{
+        allpost = '';
         //res.send(JSON.stringify(result));
         //We will be recieving multiple articles from the database
         for(i=0; i < result.rowCount; i++){
           allpost = allpost + createTemplate(result.rows[i]);
         }
+        //allpost = [allpost,result.rowCount.toString()].join('$');
         res.send(allpost);
       }
     });
+});
 
-    //close connection
+var tot_blog_pos = 0;
+app.get('/tot_blog_pos',function(req,res){
+  pool.query('Select * from article',function(err,result){
+       if (err) {
+          res.status(500).send(err.toString());
+      }
+      else {
+        tot_blog_pos = result.rowCount;
+        res.send(tot_blog_pos.toString());
+      }
+  });
 });
 
 
@@ -197,9 +210,9 @@ app.post('/login',function(req,res){
 });
 
 app.get('/check-login',function(req,res){
-    console.log(req.session);
-    console.log(req.session.auth);
-    console.log(req.session.auth.userId);
+    console.log(req.session.toString());
+    console.log(req.session.auth.toString());
+    console.log(req.session.auth.userId.toString());
     if(req.session && req.session.auth & req.session.auth.userId){
       res.send("You are logged in: " + req.session.auth.userId.toString());
     }
