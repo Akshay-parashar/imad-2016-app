@@ -1,3 +1,5 @@
+//Todo: Remove redundant code !!!
+
 // Libraries used
 var express = require('express');
 var morgan = require('morgan');
@@ -42,7 +44,8 @@ var connection = mysql.createConnection({
   user     : 'root',
   password : process.env.DB_PASS,
   database : 'test'
-});*/
+});
+*/
 
 //-------------------------
 
@@ -210,9 +213,6 @@ app.post('/login',function(req,res){
 });
 
 app.get('/check-login',function(req,res){
-    console.log(req.session.toString());
-    console.log(req.session.auth.toString());
-    console.log(req.session.auth.userId.toString());
     if(req.session && req.session.auth && req.session.auth.userId){
       res.send("You are logged in: " + req.session.auth.userId.toString());
     }
