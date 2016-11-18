@@ -1,19 +1,59 @@
 
 $(document).ready(function () {	
+	//To check if user is alreasy logged in or not
+		function checklogin(){
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function(){
+			if (req.readyState === XMLHttpRequest.DONE){
+				//take action 
+				if (req.status === 200) {
+					alert("You are already logged in,Welcome");
+				}
+				else {
+					alert("Please log in");
+				}
+			}
+
+		}
+		req.open('GET','/check-login',true);
+		req.send(null);
+	}
+
+	//To load screen for already logged in user 
+	function loadloggedinuser() {
+
+	}
+
+	//To hide sign in area
+	function hidesignin() {
+
+	}
+
+	//To hide signup area
+	function hidesignup() {
+
+	}
+
+	//To register new user 
+	function reguser() {
+
+	}
+
+
 	//Login form
-	var login_form = `<h3 class="login_pg">Login Page</h3>
+	var login_form = `<form><h3 class="login_pg">Login Page</h3>
                     <br>
                     Username<input type="text" id="Username"><br>
                     Password<input type="password" id="Password"><br>
-                    <input type="submit" id="submit_btn" value="Sign in">`;
+                    <input type="submit" id="sin_submit_btn" value="Sign in"><form>`;
 
 
       //Sign Up Form
-     var signup_form = `<h3 class="signup_pg">Sign Up Page</h3>
+     var signup_form = `<form><h3 class="signup_pg">Sign Up Page</h3>
                     <br>
                     Username<input type="text" id="New_Username"><br>
                     Password<input type="password" id="New_Password"><br>
-                    <input type="submit" id="sup_submit_btn" value="Sign Up"></input>`;
+                    <input type="submit" id="sup_submit_btn" value="Sign Up"></input><form>`;
 	
 	// For Fetching artilces from database dynamically
 
@@ -41,18 +81,23 @@ $(document).ready(function () {
 	//------------------------------------------------		
 
 	
+	//for signup page 
+	$('#sup_submit_btn').submit(function(){
+		alert("this button is working");
+
+	})
 	
 	//For Login page 
 	//var but = //document.getElementById('submit_btn');
-	$("#submit_btn").on('click',function(){
-	var username = document.getElementById('Username').value;
-	var password = document.getElementById('Password').value;
-	console.log(username);
-	console.log(password);
-	//Create a new response object
-	var req = new XMLHttpRequest();
+	$('#sin_submit_btn').submit(function(){
+	 var username = document.getElementById('Username').value;
+	 var password = document.getElementById('Password').value;
+	 console.log(username);
+	 console.log(password);
+	 //Create a new response object
+	 var req = new XMLHttpRequest();
 
-	//Catch the response and store it in a variable
+	 //Catch the response and store it in a variable
 		req.onreadystatechange = function(){
 			if(req.readyState === XMLHttpRequest.DONE){
 				//Take action

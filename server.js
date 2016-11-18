@@ -113,7 +113,7 @@ app.get('/fetch_blog_posts', function(req,res){
     });
 });
 
-var tot_blog_pos = 0;
+/*var tot_blog_pos = 0;
 
 app.get('/tot_blog_pos',function(req,res){
   pool.query('Select * from article',function(err,result){
@@ -143,7 +143,7 @@ app.get('/article_one',function(req,res){
           }
       }
     });
-});
+});*/
 
 app.get('/articles/:articleName', function(req,res){ 
 
