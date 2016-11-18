@@ -1,5 +1,9 @@
 
 $(document).ready(function () {	
+	//Hide both login and sign up forms
+	$("#signup_area").hide();
+	$('#signin_area').hide();
+
 	//To check if user is alreasy logged in or not
 		function checklogin(){
 		var req = new XMLHttpRequest();
@@ -41,19 +45,19 @@ $(document).ready(function () {
 
 
 	//Login form
-	var login_form = `<form><h3 class="login_pg">Login Page</h3>
+	var login_form = `<h3 class="login_pg">Login Page</h3>
                     <br>
                     Username<input type="text" id="Username"><br>
                     Password<input type="password" id="Password"><br>
-                    <input type="submit" id="sin_submit_btn" value="Sign in"><form>`;
+                    <input type="submit" id="sin_submit_btn" value="Sign in">`;
 
 
       //Sign Up Form
-     var signup_form = `<form><h3 class="signup_pg">Sign Up Page</h3>
+     var signup_form = `<h3 class="signup_pg">Sign Up Page</h3>
                     <br>
                     Username<input type="text" id="New_Username"><br>
                     Password<input type="password" id="New_Password"><br>
-                    <input type="submit" id="sup_submit_btn" value="Sign Up"></input><form>`;
+                    <input type="submit" id="sup_submit_btn" value="Sign Up"></input>`;
 	
 	// For Fetching artilces from database dynamically
 
@@ -81,15 +85,47 @@ $(document).ready(function () {
 	//------------------------------------------------		
 
 	
-	//for signup page 
-	$('#sup_submit_btn').submit(function(){
-		alert("this button is working");
+	//For signup page 
+	$('#sup_submit_btn').on('click',function(){
+	 var username = document.getElementById('New_Username').value;
+	 var password = document.getElementById('New_Password').value;
+	 console.log(username);
+	 console.log(password);
+	 //Create a new response object
+	 var req = new XMLHttpRequest();
 
-	})
+	 //Catch the response and store it in a variable
+		req.onreadystatechange = function(){
+			if(req.readyState === XMLHttpRequest.DONE){
+				//Take action
+					if (req.status === 200) {
+					//
+					console.log('user created!');
+					alert('Success!');
+				}
+				else if(req.status == 403){
+					alert('Username/password is incorrect');
+				}
+				else if(req.status == 500){
+					alert('something went wrong on serever');	
+				}
+			}
+				//Not done
+		};
+
+			//Making a Request
+			
+			
+			req.open('POST','/create_user',true);
+			req.setRequestHeader('Content-Type', 'application/json');
+			req.send(JSON.stringify({username: username, password: password}));
+		});
+
+	//-----------------------------------------------
 	
 	//For Login page 
 	//var but = //document.getElementById('submit_btn');
-	$('#sin_submit_btn').submit(function(){
+	$('#sin_submit_btn').on('click',function(){
 	 var username = document.getElementById('Username').value;
 	 var password = document.getElementById('Password').value;
 	 console.log(username);
@@ -130,18 +166,17 @@ $(document).ready(function () {
 	//For adding Login and signup in container on clicking the link from main header 
 	
 	$('#login').on('click',function(){
-		var cont = document.getElementById('log_reg');
-		//$('#log_reg').append(login_form);
-		cont.innerHTML = login_form;
+		$('#signup_area:visible').hide();
+		$('#signin_area').show();
 		$('#Username').focus();
-		console.log('added the login form');
+		
 	});	
 
 	$('#sign_up').on('click',function(){
-		var cont = document.getElementById('log_reg');
-		//$('#log_reg').append(signup_form);
-		cont.innerHTML = signup_form;
+		$('#signin_area:visible').hide();
+		$('#signup_area').show();
 		$('#New_Username').focus();
+
 	});
 
 	//--------------------------------------------------------
