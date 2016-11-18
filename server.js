@@ -10,8 +10,8 @@ var bodyparser = require('body-parser');
 var session = require('express-session');
 
 var congif = {
-  user: 'postgres',
-  database: 'postgres',
+  user: 'akshay-parashar',
+  database: 'akshay-parashar',
   host: 'db.imad.hasura-app.io',
   port: '5432',
   password: process.env.DB_PASSWORD
@@ -57,7 +57,7 @@ app.use(express.static('css'));
 
 //General Files
 function createTemplate(data){
-    var heading = data.heading;
+    var heading = data.title;
     var date = data.date;
     var content = data.content;
     var blogtemp =  `<div class="post"> 
