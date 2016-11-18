@@ -35,7 +35,7 @@ $(document).ready(function () {
 	};
 
 	//Making a Request
-	preq.open('GET','http://localhost:8080/fetch_blog_posts',true);
+	preq.open('GET','/fetch_blog_posts',true);
 	preq.send(null);
 
 	//------------------------------------------------		
