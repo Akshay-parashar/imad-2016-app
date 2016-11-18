@@ -1,8 +1,38 @@
 
 $(document).ready(function () {	
-	//Hide both login and sign up forms
+	//Hide both login and sign up forms and logout
 	$("#signup_area").hide();
 	$('#signin_area').hide();
+	$('#logout').hide();
+
+	//---------------------------------
+
+	//To change UI as user is already logged in 
+	function logoutnav() {
+		console.log("yes logout nav is called");
+		$('#login').hide();
+		$('#sign_up').hide();
+		$('#logout').show();
+		$('#logout').click(function(){
+			var req = new XMLHttpRequest();
+		    req.onreadystatechange = function(){
+				if (req.readyState === XMLHttpRequest.DONE){
+					//take action 
+					if (req.status === 200) {
+						//alert(req.responseText);
+						window.location.href = '/';
+					}
+					else {
+						alert("Please log in");
+					}
+				}
+
+			}
+
+			req.open('GET','/logout',true);
+			req.send(null);		
+		});
+	}
 
 	//To check if user is alreasy logged in or not
 		function checklogin(){
@@ -11,10 +41,17 @@ $(document).ready(function () {
 			if (req.readyState === XMLHttpRequest.DONE){
 				//take action 
 				if (req.status === 200) {
-					alert("You are already logged in,Welcome");
-				}
-				else {
-					alert("Please log in");
+					if(req.responseText == "Account_User") {
+					logoutnav();
+					//alert(req.responseText);
+					//Change navigation links as the user is already logged in 
+
+					}
+					else if(req.responseText = 'Guest'){
+						console.log("Guest rights allowed");
+						//alert(req.responseText);
+
+					}
 				}
 			}
 
@@ -22,6 +59,9 @@ $(document).ready(function () {
 		req.open('GET','/check-login',true);
 		req.send(null);
 	}
+
+		checklogin();
+
 
 	//To load screen for already logged in user 
 	function loadloggedinuser() {
@@ -101,7 +141,7 @@ $(document).ready(function () {
 					if (req.status === 200) {
 					//
 					console.log('user created!');
-					alert('Success!');
+					//alert('Success!');
 				}
 				else if(req.status == 403){
 					alert('Username/password is incorrect');
@@ -142,7 +182,8 @@ $(document).ready(function () {
 					if (req.status === 200) {
 					//
 					console.log('user logged in!');
-					alert('Success!');
+					//alert('Success!');
+					window.location.href = '/'; //Here's my redirect - the router is listening for this route and will render accordingly
 				}
 				else if(req.status == 403){
 					alert('Username/password is incorrect');
