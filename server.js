@@ -14,7 +14,7 @@ var congif = {
   database: 'postgres',
   host: 'localhost',
   port: '5432',
-  password: process.env.DB_PASS
+  password: process.env.DB_PASSWORD
 };
 
 var app = express();
@@ -114,6 +114,7 @@ app.get('/fetch_blog_posts', function(req,res){
 });
 
 var tot_blog_pos = 0;
+
 app.get('/tot_blog_pos',function(req,res){
   pool.query('Select * from article',function(err,result){
        if (err) {
