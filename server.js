@@ -63,11 +63,19 @@ function createTemplate(data){
     var blogtemp =  `<div class="post"> 
                         <h3 class="post_heading">${heading}</h3>
                         <span class="post_date" id="bg_date">${date.toDateString()}</span><span class="post_comments"># Comments</span>
-                        <p class="post_conent">${content}</p>
-                        <a href="#">Comment</a>
+                        <p class="post_content">${content}</p>
+                        <a href="#">Read more</a>
                         <hr>
                   </div>` ;
       return blogtemp;
+}
+
+function createArticleTemplate(article) {
+  var heading = article.heading;
+  var date = article.date;
+  var author = article.author;
+  var fullart = ``;
+  return fullart;
 }
 
 app.get('/', function (req, res) {
@@ -88,7 +96,7 @@ app.get('/counter',function(req,res){
 app.get('/fetch_blog_posts', function(req,res){
    
     //make a select query 
-    pool.query('SELECT * FROM article', function(err,result){
+    pool.query('SELECT * FROM article order by date DESC', function(err,result){
       if (err) {
           res.status(500).send(err.toString());
       }
@@ -145,7 +153,7 @@ app.get('/articles/:articleName', function(req,res){
         }
       else {
         if(result.rows.length == 0){
-            res.send(404).send("Article Not Found");
+            res.status(404).send("Article Not Found");
           }
           else{
             articleData = result.rows[0];
@@ -153,6 +161,28 @@ app.get('/articles/:articleName', function(req,res){
           }
       }
   });
+});
+
+
+//To recieve full article with particular content from database
+
+app.get('/fetch_art_with_heading?art_head',function(){
+   pool.query("Select * from article where heading = " + req.query.art_head,function
+    (err,result){
+        if(err){
+          res.status(500).send(err.toString());
+         // console.log("Error situation in db most probab in query")
+        }
+        else {
+          if (result.row.length == 0) {
+            res.status(404).send("Article not found");
+          }
+          else{
+            //Send the JSON response from this endpoint 
+            res.send(createArticleTemplate(result.rows[0]));
+          }
+        }
+    });
 });
 
 function hash(input,salt){

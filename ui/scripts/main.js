@@ -5,7 +5,7 @@ $(document).ready(function () {
                     <br>
                     Username<input type="text" id="Username"><br>
                     Password<input type="password" id="Password"><br>
-                    <input type="submit" id="submit_btn" value="Sign in"></input>`;
+                    <input type="submit" id="submit_btn" value="Sign in">`;
 
 
       //Sign Up Form
@@ -26,7 +26,7 @@ $(document).ready(function () {
 				if (preq.status === 200) {
 					console.log("getting response from db endpoint")
 				var blog_con = preq.responseText;
-				var con = document.getElementById('posts');
+				var con = document.getElementById('post_container');
 				//$("#").html(blog_con);
 				con.innerHTML = blog_con;
 			}
@@ -41,11 +41,12 @@ $(document).ready(function () {
 	//------------------------------------------------		
 
 	
+	
 	//For Login page 
-	var but = $('#submit_btn');
-	but.click(function(){
+	//var but = //document.getElementById('submit_btn');
+	$("#submit_btn").on('click',function(){
 	var username = document.getElementById('Username').value;
-	var password = document.getElementById('Password').value;;
+	var password = document.getElementById('Password').value;
 	console.log(username);
 	console.log(password);
 	//Create a new response object
@@ -81,7 +82,9 @@ $(document).ready(function () {
 	//-------------------------------------------------------
 
 
-	$('#login').click(function(){
+	//For adding Login and signup in container on clicking the link from main header 
+	
+	$('#login').on('click',function(){
 		var cont = document.getElementById('log_reg');
 		//$('#log_reg').append(login_form);
 		cont.innerHTML = login_form;
@@ -89,12 +92,14 @@ $(document).ready(function () {
 		console.log('added the login form');
 	});	
 
-	$('#sign_up').click(function(){
+	$('#sign_up').on('click',function(){
 		var cont = document.getElementById('log_reg');
 		//$('#log_reg').append(signup_form);
 		cont.innerHTML = signup_form;
 		$('#New_Username').focus();
 	});
+
+	//--------------------------------------------------------
 });
 
 
