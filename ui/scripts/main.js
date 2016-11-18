@@ -119,6 +119,8 @@ $(document).ready(function () {
 			req.open('POST','/create_user',true);
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({username: username, password: password}));
+
+			//TODO: Redirect after signing in the new user and change UI
 		});
 
 	//-----------------------------------------------
@@ -155,9 +157,11 @@ $(document).ready(function () {
 			//Making a Request
 			
 			
-			req.open('POST','http://localhost:8080/login',true);
+			req.open('POST','/login',true);
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({username: username, password: password}));
+
+			//TODO: Redirect after signing in the new user and change the UI
 		});
 
 	//-------------------------------------------------------
