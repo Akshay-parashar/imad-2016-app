@@ -118,7 +118,7 @@ function createArticleTemplate(article) {
         <span>&copy; Akshay Parashar | 2016. Thanks For Stopping By.</span>
     </footer>
     <script type="text/javascript" src="/ui/scripts/jquery.js"></script><!-- Jquery -->
-   
+    <script type="text/javascript" src="/ui/scripts/main.js"></script> <!-- Custom Javascript -->
     <script type="text/javascript" src="/ui/scripts/article.js"></script><!--article JS -->
 </body>
 </html>`;
@@ -221,6 +221,53 @@ app.post('/create_user',function(req,res){
         res.send('User created successfully! :' + username);
       }
   });
+});
+
+
+app.post('/submit-comment/:currarttitle',function(req,res){
+   // Check if the user is logged in
+    if (req.session && req.session.auth && req.session.auth.userId) {
+        // First check if the article exists and get the article-id
+        pool.query('Select * from article where title = $1', [req.params.currarttitle], function (err, result) {
+            if (err) {
+                res.status(500).send(err.toString());
+            } else {
+                if (result.rows.length === 0) {
+                    res.status(400).send('Article not found');
+                } else {
+                    var articleId = result.rows[0].id;
+                    // Now insert the right comment for this article
+                    pool.query(
+                        "INSERT INTO comments (comment, article_id, user_id) VALUES ($1, $2, $3)",
+                        [req.body.comment, articleId, req.session.auth.userId],
+                        function (err, result) {
+                            if (err) {
+                                res.status(500).send(err.toString());
+                            } else {
+                                res.status(200).send('Comment inserted!');
+                                console.log("Comment Inserted");
+                            }
+                        });
+                }
+            }
+       });     
+    } else {
+        res.status(403).send('Only logged in users can comment');
+    }
+});
+
+app.get( '/get-comments/:currarttitle', function(req,res){
+   // make a select request
+   // return a response with the results
+   pool.query('SELECT comments.*, users.username FROM article, comments, users WHERE article.title = $1 AND article.id = comments.article_id AND comments.user_id = users.id ORDER BY comments.timestamp DESC', [req.params.currarttitle], function (err, result) {
+      if (err) {
+          res.status(500).send(err.toString());
+          console.log("Some error in get-comments query");
+      } else {
+          res.send(JSON.stringify(result.rows));
+          console.log("Sending all comments in JSON");
+      }
+   });
 });
 
 app.post('/login',function(req,res){

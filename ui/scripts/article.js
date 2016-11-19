@@ -8,29 +8,34 @@ function loadcommentform() {
 		<h3>Submit a comment</h3>
         <textarea id="comment_text" rows="5" class="containerr" placeholder="Enter your comment here..." ></textarea>
         <br/>
-        <input type="submit" id="submit" value="Submit" />
+        <input type="submit" id="submitt" value="Submit" />
         <br/>`;
 
         document.getElementById('comment_form').innerHTML = commentFormHtml;
-        return;
-
-
-	//Making logic for submitting Comments
+        
 }
 
 
 function loadlogin() {
-	var req = new XMLHttpRequest();
-	req.onreadystatechange = function () {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function () {
 		  if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
-                loadcommentform(this.responseText);
+                loadcommentform();
             }
         }
 	};
 
-	req.open('GET','/check-login',true);
-	req.send(null);
+	request.open('GET','/check-login',true);
+	request.send(null);
+}
+
+function escapeHTML (text)
+{
+    var $text = document.createTextNode(text);
+    var $div = document.createElement('div');
+    $div.appendChild($text);
+    return $div.innerHTML;
 }
 
 function loadcomments(){
@@ -44,7 +49,8 @@ function loadcomments(){
                 var commentsData = JSON.parse(this.responseText);
                 for (var i=0; i< commentsData.length; i++) {
                     var time = new Date(commentsData[i].timestamp);
-                    content += `<div class="comment">
+                    //Taking care to prevent from XSS attacks
+                    content += `<div class="indi_comment ">
                         <p>${escapeHTML(commentsData[i].comment)}</p>
                         <div class="commenter">
                             ${commentsData[i].username} - ${time.toLocaleTimeString()} on ${time.toLocaleDateString()} 
@@ -53,7 +59,7 @@ function loadcomments(){
                 }
                 comments.innerHTML = content;
             } else {
-                comments.innerHTML('Oops! Could not load comments!');
+                comments.innerHTML ='Oops! Could not load comments!';
             }
         }
     };
@@ -63,9 +69,42 @@ function loadcomments(){
 }
 
 //Check if user is logged in and loding comments on articles
-//loadlogin();
-//loadcomments();
-loadcommentform();
+loadlogin();
+loadcomments();
+//loadcommentform();
+//For submitting Comments
+	
+    var submit = document.getElementById('submitt');
+    submit.onclick = function () {
+        // Create a request object
+        var prequest = new XMLHttpRequest();
+        
+        // Capture the response and store it in a variable
+        prequest.onreadystatechange = function () {
+          if (prequest.readyState === XMLHttpRequest.DONE) {
+                // Take some action
+                if (prequest.status === 200) {
+                    // clear the form & reload all the comments
+                    document.getElementById('comment_text').value = '';
+                    loadcomments();
+                    //alert("Will Shortly LoadComments");  
+                } else {
+                    alert('Error! Could not submit comment');
+                    console.log(prequest.responseText);
+                }
+                submit.value = 'Submit';
+          }
+        };
+        
+        // Make the request
+        var comment = document.getElementById('comment_text').value;
+        prequest.open('POST', '/submit-comment/' + currentArticleTitle, true);
+        console.log(currentArticleTitle);
+        prequest.setRequestHeader('Content-Type', 'application/json');
+        prequest.send(JSON.stringify({comment: comment})); 
+        submit.value = 'Submitting...';
+        
+    };
 
 
 
