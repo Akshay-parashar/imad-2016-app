@@ -71,7 +71,7 @@ function loadcomments(){
 //Check if user is logged in and loding comments on articles
 loadlogin();
 loadcomments();
-//loadcommentform();
+
 //For submitting Comments
 	
     var submit = document.getElementById('submitt');
