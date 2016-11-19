@@ -82,10 +82,12 @@ figcaption{
 	color: #3acec2;
 	text-transform: uppercase;
 	font-family: 'Nunito', sans-serif;
+
 }
 
 .main-nav a:hover {
 	color: #093a58;
+
 }
 
 /* ---- Layout Containers ---- */
@@ -102,6 +104,30 @@ figcaption{
 
 .banner_bg {
 	background-image: url('/ui/img/back.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 300px;
+	filter: blur(4px);
+}
+
+.banner_bg_about {
+	background-image: url('/ui/img/aboutme.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 300px;
+	filter: blur(4px);
+}
+
+.banner_bg_contact {
+	background-image: url('/ui/img/contactus.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 300px;
+	filter: blur(4px);
+}
+
+.banner_bg_art {
+	background-image: url('/ui/img/letter.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 300px;
@@ -178,6 +204,7 @@ figcaption{
 
 .post_comments {
 	margin-left: 20px;
+
 }
 
 .post_content {
@@ -185,6 +212,20 @@ figcaption{
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.post_heading a{
+	text-transform: uppercase;
+	font-size: 1.25em;
+	color: #3acec2;
+	font-family: 'Nunito', sans-serif;
+	
+}
+
+.post_heading a:hover {
+	color: #093a58;
+	text-shadow: 0 2px rgba(0,0,0,0.5);
+	
 }
 
 /* ---- Page Elements ---- */

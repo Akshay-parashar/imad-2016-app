@@ -25,27 +25,6 @@ app.use(session({
   cookie: { maxAge: 1000* 60 * 60 * 24 * 30 }
 }));
 
-/*var phpExpress = require('php-express')({
- 
-  // assumes php is in your PATH
-  binPath: 'php'
-});
-
-// set view engine to php-express
-app.set('views', './views');
-app.engine('php', phpExpress.engine);
-app.set('view engine', 'php');
- 
-// routing all .php file to php-express
-app.all(/.+\.php$/, phpExpress.router);
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : process.env.DB_PASS,
-  database : 'test'
-});
-*/
 
 //-------------------------
 
@@ -61,26 +40,91 @@ function createTemplate(data){
     var date = data.date;
     var content = data.content;
     var blogtemp =  `<div class="post"> 
-                        <h3 class="post_heading">${heading}</h3>
+                        <h3 class="post_heading"><a href='/article/${heading}'>${heading}</a></h3>
                         <span class="post_date" id="bg_date">${date.toDateString()}</span><span class="post_comments"># Comments</span>
-                        <p class="post_content">${content}</p>
-                        <a href="#">Read more</a>
+                        <p></p>
+                        <a href="#" class="read">Read more</a>
                         <hr>
                   </div>` ;
       return blogtemp;
 }
 
 function createArticleTemplate(article) {
-  var heading = article.heading;
+  var heading = article.title;
   var date = article.date;
-  var author = article.author;
-  var fullart = ``;
-  return fullart;
+  var author = article.author_id;
+  var arttemp = `<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Article Template</title>
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="/ui/css/normalize.css" rel="stylesheet"/>
+    <link href="/ui/css/style.css" rel="stylesheet"/>
+    <link rel="icon" href="/img/ico.png">
+    <script type="text/javascript" src="/ui/scripts/jquery.js"></script><!-- Jquery -->
+    <script type="text/javascript" src="/ui/scripts/main.js"></script> <!-- Custom Javascript -->
+</head>
+<body>
+  <div class="wrap">
+    <header class="main-header">
+                <div class="containerr clearfix">
+                    <h1 class="name"><a href="#">Personal Blog</a></h1>
+                    <ul class="main-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#login_pg" id="login">Login</a></li>
+                        <li><a href="#signup_pg" id="sign_up">Sign Up</a></li>
+                        <li><a href="#logout" id="logout">Logout</a></li>
+                    </ul>
+                </div>
+            </header><!--main-header-->
+
+            <div class="banner">
+                <div class="banner_bg_art"></div>
+                <div class="banner_content">
+                    <h1 class="headline">Article One</h1>
+                    
+                </div>
+            </div>
+
+
+        <div class="specific_art_cont">
+          <p>${heading}</p>
+          <p>${date}</p>
+          <p>${author}</p>
+        </div>    
+
+
+  </div>
+
+  <footer class="main-footer">
+        <span>&copy; Akshay Parashar | 2016. Thanks For Stopping By.</span>
+    </footer>
+</body>
+</html>`;
+  return arttemp;
 }
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
+
+app.get('/test', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'art_temp.html'));
+});
+
+app.get('/about', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'about.html'));
+});
+
+app.get('/contact', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'contact.html'));
+});
+
+
 
 var counter = 0;
 app.get('/counter',function(req,res){
@@ -113,41 +157,11 @@ app.get('/fetch_blog_posts', function(req,res){
     });
 });
 
-/*var tot_blog_pos = 0;
+//To recieve full article with particular content from database
 
-app.get('/tot_blog_pos',function(req,res){
-  pool.query('Select * from article',function(err,result){
-       if (err) {
-          res.status(500).send(err.toString());
-      }
-      else {
-        tot_blog_pos = result.rowCount;
-        res.send(tot_blog_pos.toString());
-      }
-  });
-});
+app.get('/article/:articleName', function(req,res){ 
 
-
-app.get('/article_one',function(req,res){
-    pool.query("Select * from article where title = 'Article-One' ",function(err,result){
-        if(err){
-          res.status(500).send(err.toString());
-          console.log("Error situation in db most probab in query")
-        }
-        else {
-          if(result.rows.length == 0){
-            res.send(404).send("Article Not Found");
-          }
-          else{
-            res.send(JSON.stringify(result.rows));
-          }
-      }
-    });
-});*/
-
-app.get('/articles/:articleName', function(req,res){ 
-
-  pool.query("Select * from article where title = $1" , [req.params.articleName] ,function(err,result){
+  pool.query("Select * from article where title = $1", [req.params.articleName] ,function(err,result){
      if(err){
           res.status(500).send(err.toString());
          // console.log("Error situation in db most probab in query")
@@ -158,33 +172,16 @@ app.get('/articles/:articleName', function(req,res){
           }
           else{
             articleData = result.rows[0];
-            res.send(createTemplate(articleData));
+            console.log(articleData);
+            res.send(createArticleTemplate(articleData));
           }
       }
   });
 });
 
 
-//To recieve full article with particular content from database
 
-app.get('/fetch_art_with_heading?art_head',function(){
-   pool.query("Select * from article where heading = " + req.query.art_head,function
-    (err,result){
-        if(err){
-          res.status(500).send(err.toString());
-         // console.log("Error situation in db most probab in query")
-        }
-        else {
-          if (result.row.length == 0) {
-            res.status(404).send("Article not found");
-          }
-          else{
-            //Send the JSON response from this endpoint 
-            res.send(createArticleTemplate(result.rows[0]));
-          }
-        }
-    });
-});
+
 
 function hash(input,salt){
   var hashed = crypto.pbkdf2Sync(input,salt,1000,512,'sha512');
@@ -296,6 +293,18 @@ app.get('/ui/img/insta.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/img', 'insta.png'));
 });
 
+app.get('/ui/img/aboutme.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'aboutme.jpg'));
+});
+
+app.get('/ui/img/contactus.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'contactus.jpg'));
+});
+
+app.get('/ui/img/letter.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'letter.jpg'));
+});
+
 //-----------------------------
 
 //Responses for script files
@@ -308,8 +317,6 @@ app.get('/ui/scripts/jquery.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/scripts', 'jquery.js'));
 });
 //-----------------------------
-
-
 
 var port = 8080; // Use 8080 for local development because you might already have apache running on 80
 app.listen(8080, function () {
