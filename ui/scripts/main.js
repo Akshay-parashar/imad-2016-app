@@ -1,4 +1,5 @@
 
+
 $(document).ready(function () {	
 	//Hide both login and sign up forms and logout
 	$("#signup_area").hide();
@@ -211,9 +212,11 @@ $(document).ready(function () {
 	//For adding Login and signup in container on clicking the link from main header 
 	
 	$('#login').on('click',function(){
+
 		$('#signup_area:visible').hide();
 		$('#signin_area').show();
 		$('#Username').focus();
+
 		
 	});	
 

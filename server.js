@@ -53,6 +53,7 @@ function createArticleTemplate(article) {
   var heading = article.title;
   var date = article.date;
   var author = article.author_id;
+  var content = article.content;
   var arttemp = `<!DOCTYPE html>
 <html>
 <head>
@@ -63,8 +64,7 @@ function createArticleTemplate(article) {
     <link href="/ui/css/normalize.css" rel="stylesheet"/>
     <link href="/ui/css/style.css" rel="stylesheet"/>
     <link rel="icon" href="/img/ico.png">
-    <script type="text/javascript" src="/ui/scripts/jquery.js"></script><!-- Jquery -->
-    <script type="text/javascript" src="/ui/scripts/main.js"></script> <!-- Custom Javascript -->
+
 </head>
 <body>
   <div class="wrap">
@@ -85,16 +85,30 @@ function createArticleTemplate(article) {
             <div class="banner">
                 <div class="banner_bg_art"></div>
                 <div class="banner_content">
-                    <h1 class="headline">Article One</h1>
+                    <h1 class="headline">${heading}</h1>
                     
                 </div>
             </div>
 
 
-        <div class="specific_art_cont">
-          <p>${heading}</p>
-          <p>${date}</p>
-          <p>${author}</p>
+        <div class="name_art_wrap containerr" >
+          <div class="name_art_cont">
+            <p>${heading}</p>
+            <p>${date}</p>
+            <p>${author}</p>
+            <p>${content}</p>
+          </div>
+
+          <hr>
+
+          <h2>Comments </h2>
+
+          <div class="comment_form" id="comment_form">
+          </div>
+
+          <div id="comments">
+          </div>
+
         </div>    
 
 
@@ -103,6 +117,9 @@ function createArticleTemplate(article) {
   <footer class="main-footer">
         <span>&copy; Akshay Parashar | 2016. Thanks For Stopping By.</span>
     </footer>
+    <script type="text/javascript" src="/ui/scripts/jquery.js"></script><!-- Jquery -->
+   
+    <script type="text/javascript" src="/ui/scripts/article.js"></script><!--article JS -->
 </body>
 </html>`;
   return arttemp;
@@ -119,7 +136,6 @@ app.get('/about', function (req, res) {
 app.get('/contact', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'contact.html'));
 });
-
 
 
 var counter = 0;
@@ -311,6 +327,10 @@ app.get('/ui/scripts/main.js', function (req, res) {
 
 app.get('/ui/scripts/jquery.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/scripts', 'jquery.js'));
+});
+
+app.get('/ui/scripts/article.js', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/scripts', 'article.js'));
 });
 //-----------------------------
 

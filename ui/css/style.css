@@ -228,6 +228,15 @@ figcaption{
 	
 }
 
+.name_art_wrap {
+	background-color: white;
+	padding: .75rem;
+}
+
+.name_art_cont {
+	padding: 1rem;
+}
+
 /* ---- Page Elements ---- */
 
 .about_btn {
