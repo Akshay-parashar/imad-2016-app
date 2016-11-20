@@ -21,7 +21,10 @@ function loadlogin() {
 	request.onreadystatechange = function () {
 		  if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
-                loadcommentform();
+                if (responseText == "Account_User") {
+                	loadcommentform();
+                }
+                
             }
         }
 	};
@@ -50,7 +53,8 @@ function loadcomments(){
                 for (var i=0; i< commentsData.length; i++) {
                     var time = new Date(commentsData[i].timestamp);
                     //Taking care to prevent from XSS attacks
-                    content += `<div class="indi_comment ">
+                    content += `<hr>
+                    		<div class="indi_comment ">
                         <p>${escapeHTML(commentsData[i].comment)}</p>
                         <div class="commenter">
                             ${commentsData[i].username} - ${time.toLocaleTimeString()} on ${time.toLocaleDateString()} 

@@ -41,9 +41,9 @@ function createTemplate(data){
     var content = data.content;
     var blogtemp =  `<div class="post"> 
                         <h3 class="post_heading"><a href='/article/${heading}'>${heading}</a></h3>
-                        <span class="post_date" id="bg_date">${date.toDateString()}</span><span class="post_comments"># Comments</span>
+                        <span class="post_date" id="bg_date">Submitted on: ${date.toDateString()}</span><span class="post_comments"># Comments</span>
                         <p></p>
-                        <a href="#" class="read">Read more</a>
+                        <a href="/article/${heading}" class="read">Read more</a>
                         <hr>
                   </div>` ;
       return blogtemp;
@@ -73,10 +73,10 @@ function createArticleTemplate(article) {
                     <h1 class="name"><a href="#">Personal Blog</a></h1>
                     <ul class="main-nav">
                         <li><a href="/">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#login_pg" id="login">Login</a></li>
-                        <li><a href="#signup_pg" id="sign_up">Sign Up</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#login_pg" id="login" title="Goto HomePage To LogIn">Login</a></li>
+                        <li><a href="#signup_pg" id="sign_up" title="Goto HomePage To Signup">Sign Up</a></li>
                         <li><a href="#logout" id="logout">Logout</a></li>
                     </ul>
                 </div>
@@ -364,6 +364,9 @@ app.get('/ui/img/letter.jpg', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/img', 'letter.jpg'));
 });
 
+app.get('/ui/img/dp.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'dp.jpg'));
+});
 //-----------------------------
 
 //Responses for script files

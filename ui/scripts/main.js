@@ -63,28 +63,6 @@ $(document).ready(function () {
 
 		checklogin();
 
-
-	//To load screen for already logged in user 
-	function loadloggedinuser() {
-
-	}
-
-	//To hide sign in area
-	function hidesignin() {
-
-	}
-
-	//To hide signup area
-	function hidesignup() {
-
-	}
-
-	//To register new user 
-	function reguser() {
-
-	}
-
-
 	//Login form
 	var login_form = `<h3 class="login_pg">Login Page</h3>
                     <br>

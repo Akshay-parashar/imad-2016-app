@@ -177,7 +177,8 @@ figcaption{
 	background-color: white;
 	height: 100%;
 	float: right;
-	margin-right: 10px;
+	margin-right: 5px;
+	margin-left: 5px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	border-radius: 10px;
@@ -189,7 +190,7 @@ figcaption{
 	width: 100%;
 	background-color: white;
 	margin: 0 auto;
-	margin-top: 10px;
+	margin-top: 0.625rem;
 }
 
 .center_con {
@@ -230,11 +231,11 @@ figcaption{
 
 .name_art_wrap {
 	background-color: white;
-	padding: .75rem;
+	padding: .50rem;
 }
 
 .name_art_cont {
-	padding: 1rem;
+	/*padding: 1rem;*/
 }
 
 /* ---- Page Elements ---- */
@@ -285,6 +286,34 @@ figcaption{
 	margin: auto auto;
 	border-radius: 100%;
 	max-width: 15%
+}
+
+.login_reg_head {
+	margin: 0px;
+}
+
+.username_label,.password_label {
+	font-family: 'Nunito', sans-serif;
+	font-size: 1.1em;
+	color: #093a58;
+}
+
+.log_reg_input {
+	border-radius: 5px;
+	margin top: 5px;
+	margin-bottom: 5px;
+}
+
+.log_reg_btn {
+	margin-top: 2px;
+	margin-bottom: 10px;
+	font-family: 'Nunito',sans-serif
+	border-radius: 5px;
+}
+
+.resp_head {
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 
@@ -346,6 +375,13 @@ figcaption{
 		top: 100px;
 		left: 340px;
 	}
+
+	.blog_content_con {
+	width: 100%;
+	background-color: white;
+	margin: 0 auto;
+	margin-top: 0.625rem;
+}
 
 }
 

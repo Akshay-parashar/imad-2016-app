@@ -21,8 +21,8 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/about">About</a></li>
                         <li><a href="/contact">Contact</a></li>
-                        <li><a href="#login_pg" id="login">Login</a></li>
-                        <li><a href="#signup_pg" id="sign_up">Sign Up</a></li>
+                        <li><a href="#login_pg" id="login" >Login</a></li>
+                        <li><a href="#signup_pg" id="sign_up" >Sign Up</a></li>
                         <li><a href="#logout" id="logout">Logout</a></li>
                     </ul>
                 </div>
@@ -39,7 +39,7 @@
             <div class="blog_content_con clearfix">
                 <div class="blog_posts" id="blog_pos_con">
                     <div class="blog_post_header center_con">
-                    <h2>Blog Posts</h2>
+                    <h2 class="resp_head">Blog Posts</h2>
                     <hr>
                     </div>
                     <div id="post_container"> 
@@ -47,17 +47,18 @@
                     </div>
                 </div>
                 <div class="side_banner center_con">
-                    <h2>Side Banner</h2>
+                    <h2 class="resp_head">Side Banner</h2>
                     <hr>
-                    <button class="about_btn">about me</button>
+                    <button class="about_btn" id="about_btn">about me</button>
                     <div class="my_img">
-                        <img src="https://pbs.twimg.com/profile_images/556889283265454080/d_uXj6kf.jpeg" class="profile_img">
+                        <img src="/ui/img/dp.jpg" class="profile_img">
                     </div>
                     <hr>
                     <div class="social_links">
-                        <a href="https://www.facebook.com/akshay.parashar.5" target="_blank"><img src="/ui/img/fb.png" alt="Facebook" class="social_icon"></a>
-                        <a href="https://twitter.com/akshay27041995" target="_blank"><img src="/ui/img/tw.png" alt="Twitter" class="social_icon"></a>
-                        <a href="https://www.instagram.com/akshay.parashar/" target="_blank"><img src="/ui/img/insta.png" alt="Instagram" class="social_icon"></a>
+                        <h3><u>Social Links</u></h3>
+                        <a href="https://www.facebook.com/akshay.parashar.5" target="_blank" title="Send me a Message on Facebook"><img src="/ui/img/fb.png" alt="Facebook" class="social_icon"></a>
+                        <a href="https://twitter.com/akshay27041995" target="_blank" title="Follow me on Twitter"><img src="/ui/img/tw.png" alt="Twitter" class="social_icon"></a>
+                        <a href="https://www.instagram.com/akshay.parashar/" target="_blank" title="Follow me on Instagram"><img src="/ui/img/insta.png" alt="Instagram" class="social_icon"></a>
                     </div>
                         
                         <div id="log_reg">
@@ -66,23 +67,20 @@
                          <!--TODO: making it dynamic -->
                                 <div id="signin_area">
                                 <hr>
-                                <h3 class="login_pg">Login Page</h3>
+                                <h3 class="login_reg_head">Login Page</h3>
                                 <br>
-                                Username<input type="text" id="Username" required="true"><br>
-                                Password<input type="password" id="Password" required="true"><br>
-                                <input type="submit" id="sin_submit_btn" value="Sign in"></input>
+                                <span class="username_label">Username</span> <input type="text" id="Username" required="true" class="log_reg_input"><br>
+                                <span class="password_label">Password</span> <input type="password" id="Password" required="true" class="log_reg_input"><br>
+                                <input type="submit" id="sin_submit_btn" value="Sign in" class="log_reg_btn"></input>
                                 </div>
                            
-
-                            
-
                                 <div id="signup_area">
                                 <hr>
-                                <h3 class="signup_pg">Sign Up Page</h3>
+                                <h3 class="login_reg_head">Sign Up Page</h3>
                                 <br>
-                                Username<input type="text" id="New_Username" required="true"><br>
-                                Password<input type="password" id="New_Password" required="true"><br>
-                                <input type="submit" id="sup_submit_btn" value="Sign Up"></input>
+                                <span class="username_label">Username</span> <input type="text" id="New_Username" required="true" class="log_reg_input"><br>
+                                <span class="password_label">Password</span> <input type="password" id="New_Password" required="true" class="log_reg_input"><br>
+                                <input type="submit" id="sup_submit_btn" value="Sign Up" class="log_reg_btn"></input>
                                 </div>
                            
 
