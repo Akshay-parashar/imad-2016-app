@@ -111,8 +111,15 @@ $(document).ready(function () {
 	$('#sup_submit_btn').on('click',function(){
 	 var username = document.getElementById('New_Username').value;
 	 var password = document.getElementById('New_Password').value;
-	 console.log(username);
-	 console.log(password);
+	 //console.log(username);
+	 //console.log(password);
+
+	 if (username === '' || password === '') {
+					$("#New_Username").attr("placeholder", " Required!");
+					$("#New_Password").attr("placeholder", " Required!");
+   				}
+
+   	else {
 	 //Create a new response object
 	 var req = new XMLHttpRequest();
 
@@ -141,6 +148,7 @@ $(document).ready(function () {
 			req.open('POST','/create_user',true);
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({username: username, password: password}));
+		}
 
 			//TODO: Redirect after signing in the new user and change UI
 		});
@@ -152,8 +160,13 @@ $(document).ready(function () {
 	$('#sin_submit_btn').on('click',function(){
 	 var username = document.getElementById('Username').value;
 	 var password = document.getElementById('Password').value;
-	 console.log(username);
-	 console.log(password);
+	 
+	 if (username === '' || password === '') {
+   					$("#Username").attr("placeholder", " Required!");
+   					$("#Password").attr("placeholder", " Required!");
+   				}
+
+	 else {
 	 //Create a new response object
 	 var req = new XMLHttpRequest();
 
@@ -184,7 +197,10 @@ $(document).ready(function () {
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({username: username, password: password}));
 
+		}
+
 			//TODO: Redirect after signing in the new user and change the UI
+		
 		});
 
 	//-------------------------------------------------------

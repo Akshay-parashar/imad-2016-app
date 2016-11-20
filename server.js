@@ -368,6 +368,11 @@ app.get('/ui/img/letter.jpg', function (req, res) {
 app.get('/ui/img/dp.jpg', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/img', 'dp.jpg'));
 });
+
+app.get('/ui/img/aboutimg.jpg', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/img', 'aboutimg.jpg'));
+});
+
 //-----------------------------
 
 //Responses for script files
