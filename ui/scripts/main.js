@@ -21,7 +21,10 @@ $(document).ready(function () {
 					//take action 
 					if (req.status === 200) {
 						//alert(req.responseText);
-						window.location.href = '/';
+						alert("You have logged out");
+						window.location.href = '/window.location';
+						
+
 					}
 					else {
 						alert("Please log in");
@@ -203,6 +206,10 @@ $(document).ready(function () {
 		$('#signup_area').show();
 		$('#New_Username').focus();
 
+	});
+
+	$('#about_btn').click(function(){
+		window.location.href = '/about';
 	});
 
 	//--------------------------------------------------------

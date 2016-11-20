@@ -21,8 +21,15 @@ function loadlogin() {
 	request.onreadystatechange = function () {
 		  if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
-                if (responseText == "Account_User") {
+            	console.log(request.responseText);
+                if (request.responseText == "Account_User") {
                 	loadcommentform();
+                }
+                else {
+                	var comment = '';
+                	var hookcomm = document.getElementById('comment_form');
+                	comment = comment + '<p><b>Please login to leave a comment</b></p>';
+                	hookcomm.innerHTML = comment;
                 }
                 
             }
@@ -57,7 +64,7 @@ function loadcomments(){
                     		<div class="indi_comment ">
                         <p>${escapeHTML(commentsData[i].comment)}</p>
                         <div class="commenter">
-                            ${commentsData[i].username} - ${time.toLocaleTimeString()} on ${time.toLocaleDateString()} 
+                            Posted By: <b>${commentsData[i].username}</b> On: <b>${time.toLocaleDateString()}</b> At: <b>${time.toLocaleTimeString()}</b> 
                         </div>
                     </div>`;
                 }

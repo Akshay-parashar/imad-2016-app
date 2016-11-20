@@ -41,7 +41,7 @@ function createTemplate(data){
     var content = data.content;
     var blogtemp =  `<div class="post"> 
                         <h3 class="post_heading"><a href='/article/${heading}'>${heading}</a></h3>
-                        <span class="post_date" id="bg_date">Submitted on: ${date.toDateString()}</span><span class="post_comments"># Comments</span>
+                        <span class="post_date" id="bg_date">Submitted on: ${date.toDateString()}
                         <p></p>
                         <a href="/article/${heading}" class="read">Read more</a>
                         <hr>
@@ -77,7 +77,7 @@ function createArticleTemplate(article) {
                         <li><a href="/contact">Contact</a></li>
                         <li><a href="#login_pg" id="login" title="Goto HomePage To LogIn">Login</a></li>
                         <li><a href="#signup_pg" id="sign_up" title="Goto HomePage To Signup">Sign Up</a></li>
-                        <li><a href="#logout" id="logout">Logout</a></li>
+                        <li><a id="logout">Logout</a></li>
                     </ul>
                 </div>
             </header><!--main-header-->
@@ -94,13 +94,12 @@ function createArticleTemplate(article) {
 
         <div class="name_art_wrap containerr" >
           <div class="name_art_cont">
-            
-            <p>${content}</p>
+            <p class="main_cont">${content}</p>
           </div>
 
           <hr>
 
-          <h2>Comments </h2>
+          <h2><u>Comments</u></h2>
 
           <div class="comment_form" id="comment_form">
           </div>

@@ -235,12 +235,18 @@ figcaption{
 	padding: .50rem;
 	border: solid;
 	border-radius: 10px;
+	
 }
 
 .name_art_cont {
-	/*padding: 1rem;*/
+	padding: 0.5rem;
+	font-family: 'Nunito',helvetica;
+	font-size: 1.2em;
 }
 
+.commenter {
+	margin-bottom: 10px;
+}
 /* ---- Page Elements ---- */
 
 .about_btn {
@@ -327,6 +333,11 @@ figcaption{
 .resp_head {
 	margin-top: 4px;
 	margin-bottom: 4px;
+}
+
+.indi_comment {
+	font-family: 'Nunito',helvetica;
+	font-size: 1.1em;
 }
 
 
