@@ -85,7 +85,8 @@ function createArticleTemplate(article) {
             <div class="banner">
                 <div class="banner_bg_art"></div>
                 <div class="banner_content">
-                    <h1 class="headline">${heading}</h1>
+                    <h1 class="art_headline ">${heading}</h1>
+                    <span class="subtitle">Posted by <u>Akshay Parashar</u> on ${date.toDateString()}</span>
                     
                 </div>
             </div>
@@ -93,9 +94,7 @@ function createArticleTemplate(article) {
 
         <div class="name_art_wrap containerr" >
           <div class="name_art_cont">
-            <p>${heading}</p>
-            <p>${date}</p>
-            <p>${author}</p>
+            
             <p>${content}</p>
           </div>
 
