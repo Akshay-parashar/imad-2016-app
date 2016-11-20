@@ -212,6 +212,10 @@ $(document).ready(function () {
 		window.location.href = '/about';
 	});
 
+	$('#contact').submit(function(){
+		alert("Request Submitted,I'll Get Back To You Soon!");
+	});
+
 	//--------------------------------------------------------
 });
 

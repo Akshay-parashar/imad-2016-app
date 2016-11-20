@@ -323,6 +323,9 @@ app.get('/ui/css/normalize.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui/css', 'normalize.css'));
 });
 
+app.get('/ui/css/conc.css', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui/css', 'conc.css'));
+});
 //--------------------------------------
 
 // Responses for images

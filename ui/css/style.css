@@ -340,6 +340,18 @@ figcaption{
 	font-size: 1.1em;
 }
 
+.about_info {
+	border: solid;
+	border-radius: 10px;
+}
+
+.my_img {
+	width: 25%;
+	border-radius: 100%;
+	margin-left: 20px;
+}
+
+
 
 /* ================================= 
   Media Queries
